@@ -1,5 +1,4 @@
 import React from "react";
-import { StatusAlert } from "./Alerts/StatusAlert";
 import { taskDeleteAlert } from "./Alerts/taskDeleteAlert";
 import { updateAlert } from "./Alerts/updateAlert";
 
@@ -33,7 +32,6 @@ const Task = ({ id, task }) => {
       >
         Update
       </button>
-      <button onClick={() => StatusAlert(_id, status)}>Look Up</button>
     </div>
   );
 };
