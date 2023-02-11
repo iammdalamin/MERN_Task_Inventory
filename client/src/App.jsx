@@ -4,6 +4,7 @@ import Header from "./componentss/Header";
 import TaskCreate from "./componentss/TaskCreate";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import NotFoundPage from "./pages/NotFoundPage";
 import SignupPage from "./pages/SignupPage";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           element={user ? <TaskCreate /> : <LoginPage />}
         />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

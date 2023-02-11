@@ -38,7 +38,7 @@ const LoginPage = () => {
     return <Spinner />;
   }
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className="w-[80%] float-right h-screen flex justify-center items-center">
       <div className="w-1/3 h-auto flex flex-col gap-4 justify-center items-center px-8 py-12 rounded-xl bg-slate-800">
         <h1 className="text-slate-50 font-extrabold text-4xl">Login</h1>
         <div className="flex flex-col gap-4 w-2/3">

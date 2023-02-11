@@ -19,8 +19,11 @@ const HomePage = () => {
     return <Spinner />;
   }
   return (
-    <div className="container mx-auto">
-      <div className="mt-10  w-full mx-auto flex flex-row flex-wrap justify-center gap-6  text-left">
+    <div className="w-full h-screen ml-36  mx-auto">
+      <div>
+        <h1>Your all tesk in below:</h1>
+      </div>
+      <div className="mt-36 w-full mx-auto flex flex-row flex-wrap justify-center gap-6  text-left">
         {tasks.length > 0 ? (
           <>{""}</>
         ) : (
