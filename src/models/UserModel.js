@@ -14,7 +14,9 @@ const UserSchema = new mongoose.Schema({
         type: String, required: true,
         min: 6,
         max: 64
-    }
+    },
+    profile_img: {type:String},
+    cloudinary_id: {type:String},
 
    
 }, {timestamps: true, versionKey: false })

@@ -1,11 +1,14 @@
 const  jwt  = require("jsonwebtoken");
 const { hashPassword, comparePassword } = require("../helpers/auth");
 const UserModel = require("../models/UserModel");
-
+const cloudinary = require("../utils/cloudinary");
+const upload = require("../utils/multer");
 
 exports.registration = async (req, res) => {
     try {
         const { name, email, password } = req.body;
+        const img = req.file.path
+        console.log(img, req.body);
         if (!name.trim()) {
             return res.json({status:400,
                 error:"Name is required"})
@@ -88,13 +91,18 @@ exports.login = (req, res) => {
                         error:"Password is incorrect"
                     })
                 } else {
+                    
                     let Payload = { exp: Math.floor(Date.now() / 1000) * (24 * 60 * 60), data: data["email"] }
                     let token = jwt.sign(Payload, process.env.JWT_SECRET)
+                    
                     res.json({
                         status:200,
     
-                        message: "Login Success",
-                        data:data,
+                        message: "Login Successfull",
+                        user: {
+                            name: data.name,
+                            email: data.email,
+                        },
                         token
                     })
                 }

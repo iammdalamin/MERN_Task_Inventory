@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
@@ -20,14 +21,25 @@ const Header = () => {
     navigate("/login");
   };
   const { user } = useSelector((state) => state.auth);
-  console.log(user);
 
   const handleClick = (e) => {
     setIsActive(!isActive);
+    if (isActive) {
+      const nav = document.getElementById("nav");
+      nav.classList.add("bg-white");
+    } else {
+      const nav = document.getElementById("nav");
+
+      nav.classList.remove("bg-white");
+    }
   };
+
   return (
     <nav>
-      <div className="container w-80 mx-auto pt-8 pl-10 pr-10 md:pl-16 flex flex-col items-start  justify-start   bg-slate-900 text-slate-50 h-screen   fixed z-[9999]">
+      <div
+        id="nav"
+        className="container w-80 mx-auto pt-8 pl-8 pr-10 md:pl-10 flex flex-col items-start  justify-start   bg-slate-900 text-slate-50 h-screen   fixed z-[9999]"
+      >
         <div className="flex justify-between items-center w-full">
           <Link
             to="/"
@@ -37,8 +49,12 @@ const Header = () => {
           </Link>
 
           {user ? (
-            <p className="cursor-pointer" onClick={(e) => handleLogout(e)}>
-              <BiLogOut size="23" />
+            <p className="cursor-pointer" onClick={() => handleClick()}>
+              {isActive ? (
+                <AiOutlineDoubleRight size={23} />
+              ) : (
+                <AiOutlineDoubleLeft size="23" />
+              )}
             </p>
           ) : (
             <Link className="bg-gray-50 text-slate-700" to="/login">
@@ -60,10 +76,18 @@ const Header = () => {
               </Link>
             </p>
           ) : (
-            <div className="mt-6 p-2 bg-gradient-to-r from-indigo-500 text-slate-100">
-              <h2>
-                Hi, <span className="text-lg">{user.user.name}</span>
-              </h2>
+            <div className="mt-6 p-4 flex justify-start items-center bg-gradient-to-r from-indigo-500 text-slate-100">
+              <div className="w-12 h-12 ">
+                <img
+                  className="w-full h-full rounded-full"
+                  src={`https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`}
+                  alt=""
+                />
+              </div>
+              <div className="ml-4">
+                <span className="text-[12px] ">Welcome</span>
+                <h2 className="text-lg font-bold">{user.user.name}</h2>
+              </div>
             </div>
           )}
         </div>
@@ -128,6 +152,13 @@ const Header = () => {
                 to="/complete-task"
               >
                 Complete Tasks
+              </NavLink>
+            </li>
+            <li>
+              <NavLink className="p-2" to="/" onClick={(e) => handleLogout(e)}>
+                <span>
+                  Logout <BiLogOut className="inline-block" size={25} />
+                </span>
               </NavLink>
             </li>
           </ul>
