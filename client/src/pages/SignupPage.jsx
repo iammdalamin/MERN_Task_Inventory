@@ -39,6 +39,7 @@ const SignupPage = () => {
       password,
     };
     dispatch(register(userData));
+    console.log(userData);
   };
   if (isLoading) {
     return <Spinner />;
@@ -71,6 +72,7 @@ const SignupPage = () => {
             required
             placeholder="Password"
           />
+
           <button className="px-2 py-2 bg-gray-200" onClick={handleSubmit}>
             Sign Up
           </button>

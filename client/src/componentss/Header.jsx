@@ -38,7 +38,11 @@ const Header = () => {
     <nav>
       <div
         id="nav"
-        className="container w-80 mx-auto pt-8 pl-8 pr-10 md:pl-10 flex flex-col items-start  justify-start   bg-slate-900 text-slate-50 h-screen   fixed z-[9999]"
+        className={
+          isActive
+            ? `container left-[-87%] mx-auto pt-8 pl-8 pr-10 md:pl-10 flex flex-col items-start  justify-start   bg-slate-900 text-slate-50 h-screen   fixed z-[9999] overflow-hidden`
+            : `container w-80 mx-auto pt-8 pl-8 pr-10 md:pl-10 flex flex-col items-start  justify-start   bg-slate-900 text-slate-50 h-screen   fixed z-[9999]`
+        }
       >
         <div className="flex justify-between items-center w-full">
           <Link
@@ -49,13 +53,20 @@ const Header = () => {
           </Link>
 
           {user ? (
-            <p className="cursor-pointer" onClick={() => handleClick()}>
+            <div
+              className={
+                isActive
+                  ? `cursor-pointer right-[-5rem] absolute p-2 bg-indigo-700 text-slate-50 `
+                  : `cursor-pointer   p-2 bg-indigo-700 text-slate-50 `
+              }
+              onClick={() => handleClick()}
+            >
               {isActive ? (
                 <AiOutlineDoubleRight size={23} />
               ) : (
                 <AiOutlineDoubleLeft size="23" />
               )}
-            </p>
+            </div>
           ) : (
             <Link className="bg-gray-50 text-slate-700" to="/login">
               LogIn

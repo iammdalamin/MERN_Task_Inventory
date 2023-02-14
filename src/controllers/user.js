@@ -1,14 +1,21 @@
+const { formidable } = require("formidable");
 const  jwt  = require("jsonwebtoken");
 const { hashPassword, comparePassword } = require("../helpers/auth");
 const UserModel = require("../models/UserModel");
-const cloudinary = require("../utils/cloudinary");
-const upload = require("../utils/multer");
+const cloudinary = require("cloudinary")
+  .v2;
+cloudinary.config({
+  cloud_name: 'dzmhzssov',
+    api_key: '793214593646265',
+    api_secret: '0Xh0ypHZgbGUVBIWSwfm0Kh2VvQ',
+    secure: true
+
+});
 
 exports.registration = async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        const img = req.file.path
-        console.log(img, req.body);
+        console.log( req.body);
         if (!name.trim()) {
             return res.json({status:400,
                 error:"Name is required"})
@@ -154,4 +161,30 @@ exports.selectProfile = (req, res) => {
         }
     })
     
+}
+
+exports.upload = async(req, res, next) => {
+    const form = formidable({ multiples: true })
+    form.parse(req, async(err, fields, files) => {
+        if (err) {
+            next(err);
+            return
+            
+        }
+        const options = {
+            use_filename: true,
+            unique_filename: false,
+            overwrite: true,
+          };
+      
+          try {
+            // Upload the image
+            const result =  await cloudinary.uploader.upload(`${files.img.filepath}`, options);
+            console.log(result.public_id);
+            return result.public_id;
+          } catch (error) {
+            console.error("error",error);
+          }
+        res.json({fields, files})
+    })
 }
