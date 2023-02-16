@@ -19,7 +19,7 @@ const HomePage = () => {
     return <Spinner />;
   }
   return (
-    <div className="w-full h-screen ml-36  mx-auto">
+    <div className="w-full h-screen   mx-auto">
       <div>
         <h1>Your all tesk in below:</h1>
       </div>

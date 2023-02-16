@@ -4,6 +4,7 @@ import { BiLogOut } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link, NavLink } from "react-router-dom";
+import { getUserDetails } from "../Helpers/SessionHelper";
 import { logout, reset } from "../redux/state-slice/authSlice";
 import { resetTasks } from "../redux/state-slice/taskSlice";
 
@@ -21,7 +22,7 @@ const Header = () => {
     navigate("/login");
   };
   const { user } = useSelector((state) => state.auth);
-
+  const data = getUserDetails();
   const handleClick = (e) => {
     setIsActive(!isActive);
     if (isActive) {
@@ -40,8 +41,8 @@ const Header = () => {
         id="nav"
         className={
           isActive
-            ? `container left-[-87%] mx-auto pt-8 pl-8 pr-10 md:pl-10 flex flex-col items-start  justify-start   bg-slate-900 text-slate-50 h-screen   fixed z-[9999] overflow-hidden`
-            : `container w-80 mx-auto pt-8 pl-8 pr-10 md:pl-10 flex flex-col items-start  justify-start   bg-slate-900 text-slate-50 h-screen   fixed z-[9999]`
+            ? `container w-80 mx-auto pt-8 pl-8 pr-10 md:pl-10 flex flex-col items-start  justify-start   bg-slate-900 text-slate-50 h-screen   fixed z-[9999] overflow-hidden`
+            : `container left-[-87%]  mx-auto pt-8 pl-8 pr-10 md:pl-10 flex flex-col items-start  justify-start   bg-slate-900 text-slate-50 h-screen   fixed z-[9999]`
         }
       >
         <div className="flex justify-between items-center w-full">
@@ -97,13 +98,15 @@ const Header = () => {
               </div>
               <div className="ml-4">
                 <span className="text-[12px] ">Welcome</span>
-                <h2 className="text-lg font-bold">{user.user.name}</h2>
+                <h2 className="text-lg font-bold">
+                  {!data ? "Atom" : data.user.name}
+                </h2>
               </div>
             </div>
           )}
         </div>
 
-        <div>
+        <div className=" pb-5  h-screen w-full flex flex-col justify-between">
           <ul className="flex flex-col items-start justify-start gap-4">
             <li>
               <NavLink
@@ -173,6 +176,17 @@ const Header = () => {
               </NavLink>
             </li>
           </ul>
+          <div className="w-full flex flex-row gap-4 p-2 rounded-lg items-center bg-indigo-400">
+            <img
+              className="rounded-full w-16 h-16 object-fit"
+              src={`https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`}
+              alt="Avatar"
+            />
+            <div>
+              <h3>John Doe</h3>
+              <p>john@exm.com</p>
+            </div>
+          </div>
         </div>
       </div>
       <div className="w-full h-24 bg-indigo-400 fixed shadow-xl flex">
@@ -184,14 +198,21 @@ const Header = () => {
             </Link>
           </div>
           <div className="group relative">
-            <Link to="/profile">
-              {" "}
-              <img
-                className="w-10 h-10 rounded-3xl object-fit border-2"
-                src={`https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`}
-                alt=""
-              />
-            </Link>
+            {isActive ? (
+              <div
+                className="cursor-pointer p-2 bg-indigo-700 text-white"
+                onClick={() => handleClick()}
+              >
+                <AiOutlineDoubleLeft size="23" />
+              </div>
+            ) : (
+              <div
+                className="cursor-pointer p-2 bg-indigo-700 text-white"
+                onClick={() => handleClick()}
+              >
+                <AiOutlineDoubleRight size={23} />
+              </div>
+            )}{" "}
           </div>
         </div>
       </div>

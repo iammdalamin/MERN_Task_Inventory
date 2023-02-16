@@ -19,7 +19,10 @@ class SessionHelper{
     getEmail() {
         return localStorage.getItem("Email")
     }
-
+    isLoading() {
+        return false;
+    }
+   
 
     removeSessions = () => {
         localStorage.clear();
@@ -29,4 +32,4 @@ class SessionHelper{
     
 }
 
-export const {setEmail, getEmail, setToken, getToken, setUserDetails, getUserDetails,removeSessions} = new SessionHelper()
+export const {setEmail, getEmail, setToken, getToken, setUserDetails, getUserDetails,removeSessions, isLoading} = new SessionHelper()

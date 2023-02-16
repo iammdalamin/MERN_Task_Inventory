@@ -8,7 +8,9 @@ const AxiosHeader = {
         'Content-Type': 'application/json',
         'token':token,}}
 
+        console.log(token);
 const BaseURL = "https://task-inventory-server.onrender.com/api/v1";
+// const BaseURL = "http://localhost:5000/api/v1";
 
 
 export const AllTasks = async () => {
@@ -28,7 +30,7 @@ export const CreateTask = async (taskData) => {
 
         const data = res.data
        
-        if (data.status ===200) {
+        if (data.status === 200) {
             cogoToast.success(`${data.message}`)
         } else {
             cogoToast.error(`${data.message}`)

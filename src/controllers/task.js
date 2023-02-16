@@ -4,6 +4,7 @@ const TaskModel = require("../models/TaskModel");
 exports.TaskCreate = (req, res) => {
     const reqBody = req.body;
     reqBody.email = req.headers["email"]
+    console.log(reqBody);
     TaskModel.create(reqBody, (err, data) => {
         !err ? (
             res.json({

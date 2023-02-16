@@ -24,7 +24,7 @@ export const getAllTask = createAsyncThunk("/client/tasks", async (thunkAPI) => 
 
 // Create task
 
-export const createTask = createAsyncThunk("/client/task", async (thunkAPI,taskData) => {
+export const createTask = createAsyncThunk("/task/create", async (thunkAPI,taskData) => {
     try {
         return await CreateTask(taskData)
     } catch(error) {

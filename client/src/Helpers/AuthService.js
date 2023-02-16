@@ -9,6 +9,7 @@ const AxiosHeader = {
         'token':token,}}
 
 const BaseURL = "https://task-inventory-server.onrender.com/api/v1";
+// const BaseURL = "http://localhost:5000/api/v1";
 
 
 export const Register = async (userdata) => {
@@ -38,7 +39,6 @@ export const Login = async (userdata) => {
         setUserDetails(res.data)
         setToken(res.data.token)
         cogoToast.success(`${res.data.message}`)
-        console.log(res.data);
     }
 
    return res.data

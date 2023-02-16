@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CreateTask } from "../Helpers/TaskService";
 
@@ -6,13 +7,16 @@ const TaskCreate = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const navigate = useNavigate();
-
+  const tasks = useSelector((state) => state.tasks);
+  console.log(tasks);
+  const { isLoading } = tasks;
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await CreateTask({
       title,
       desc,
     });
+
     if (res.status === 200) {
       navigate("/");
     } else {
@@ -40,7 +44,7 @@ const TaskCreate = () => {
             className="w-2/3 py-2 rounded-lg bg-slate-900 text-slate-100"
             onClick={(e) => handleSubmit(e)}
           >
-            Create
+            {isLoading ? "..." : "Create"}
           </button>
         </div>
       </div>

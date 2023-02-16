@@ -49,10 +49,10 @@ exports.registration = async (req, res) => {
             password:hashedPassword
         }).save()
 
-        const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-            expiresIn:"7d",
-        })
-
+        let Payload = { exp: Math.floor(Date.now() / 1000) * (24 * 60 * 60), data: user["email"] }
+        let token =  jwt.sign(Payload, process.env.JWT_SECRET)
+        console.log("user", user);
+        
       return res.status(200).json({
             user: {
                 name: user.name,
@@ -64,7 +64,7 @@ exports.registration = async (req, res) => {
 
     } catch (err) {
         res.status(400).json({
-            error:"Smething went wrong",
+            error:"Something went wrong",
 
         })
   }
