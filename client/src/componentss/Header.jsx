@@ -79,31 +79,6 @@ const Header = () => {
             This is your advance task management app with various kind of
             feature
           </p>
-          {!user ? (
-            <p className="text-md text-slate-100 pt-5">
-              If you have account. Then
-              <Link to="/login" className="font-bold">
-                {" "}
-                Login here.
-              </Link>
-            </p>
-          ) : (
-            <div className="mt-6 p-4 flex justify-start items-center bg-gradient-to-r from-indigo-500 text-slate-100">
-              <div className="w-12 h-12 ">
-                <img
-                  className="w-full h-full rounded-full"
-                  src={`https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`}
-                  alt=""
-                />
-              </div>
-              <div className="ml-4">
-                <span className="text-[12px] ">Welcome</span>
-                <h2 className="text-lg font-bold">
-                  {!data ? "Atom" : data.user.name}
-                </h2>
-              </div>
-            </div>
-          )}
         </div>
 
         <div className=" pb-5  h-screen w-full flex flex-col justify-between">
@@ -176,17 +151,27 @@ const Header = () => {
               </NavLink>
             </li>
           </ul>
-          <div className="w-full flex flex-row gap-4 p-2 rounded-lg items-center bg-indigo-400">
-            <img
-              className="rounded-full w-16 h-16 object-fit"
-              src={`https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`}
-              alt="Avatar"
-            />
-            <div>
-              <h3>John Doe</h3>
-              <p>john@exm.com</p>
+          {!user ? (
+            <p className="text-md text-slate-100 pt-5">
+              If you have account. Then
+              <Link to="/login" className="font-bold">
+                {" "}
+                Login here.
+              </Link>
+            </p>
+          ) : (
+            <div className="w-full flex flex-row gap-4 p-2 rounded-lg items-center bg-indigo-400">
+              <img
+                className="rounded-full w-16 h-16 object-fit"
+                src={`https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1`}
+                alt="Avatar"
+              />
+              <div>
+                <h1>{!data ? "" : data.user.name}</h1>
+                <p>{!data ? "" : data.user.email}</p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
       <div className="w-full h-24 bg-indigo-400 fixed shadow-xl flex">
