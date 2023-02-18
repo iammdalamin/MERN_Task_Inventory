@@ -82,3 +82,25 @@ export const TaskDelete = async (id) => {
     }
 
 }
+
+export const TaskListByStatus = async (status) => {
+    const URL = `${BaseURL}/task-status/${status}`;
+
+    try {
+    const res = await axios.get(URL, AxiosHeader)
+        const { data } = res;
+        if (status === "New") {
+            console.log("New" ,data.data)
+
+        }
+        if (status === "Complete") {
+            console.log("Completed" ,data.data)
+        }
+        console.log("result", status);
+    return data
+     } catch(error) {
+        console.error(error);
+
+    }
+
+}

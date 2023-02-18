@@ -100,3 +100,26 @@ exports.TaskList = (req, res) => {
         )
     })
 }
+
+exports.TaskListByStatus = (req, res) => {
+    const status = req.params.status;
+    const email = req.headers.email;
+
+    TaskModel.aggregate(
+        [{ $match: { status, email } }], (err, data) => {
+            if (err) {
+                return res.json({
+                    status: 400,
+                    message: "Task Listing By Status Failed",
+                    data:err
+                })
+            }
+        
+            return res.json({
+                status: 200,
+                message: "Task Listed By Status",
+                data:data
+            })
+        }
+    )
+}

@@ -5,6 +5,11 @@ import { AllTasks, CreateTask, TaskUpdate } from "../../Helpers/TaskService";
 
 const initialState = {
     tasks: [],
+    status: {
+        New: [],
+        Progress:[],
+        Complete:[]
+    },
     isLoading: false,
     isError: false,
     isSuccess: false,
@@ -55,7 +60,16 @@ export const tasksSlice = createSlice({
             state.isError = false,
             state.message=""
                 
-        }
+        },
+        setNew: (state, action) => {
+            state.status.New = action.payload;
+        },
+        setProgress: (state, action) => {
+            state.status.Progress.push(action.payload);
+        },
+        setComplete: (state, action) => {
+            state.status.Complete = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -90,5 +104,5 @@ export const tasksSlice = createSlice({
 })
 
 
-export const { resetTasks } = tasksSlice.actions;
+export const { resetTasks, setNew, setProgress, setComplete } = tasksSlice.actions;
 export default tasksSlice.reducer;

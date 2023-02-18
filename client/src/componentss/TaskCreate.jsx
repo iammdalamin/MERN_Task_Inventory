@@ -24,8 +24,8 @@ const TaskCreate = () => {
     }
   };
   return (
-    <div className="w-[80%] float-right h-[520px] flex justify-center items-center">
-      <div className="mt-24 bg-slate-800 p-8">
+    <div className=" h-[520px] flex justify-center items-center">
+      <div className="mt-24 bg-indigo-900 p-8">
         <h1 className="text-4xl text-teal-50 mb-4">Create your task</h1>
         <div className=" flex flex-col gap-4 items-center">
           <input
