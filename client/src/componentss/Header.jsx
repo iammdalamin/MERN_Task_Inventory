@@ -23,6 +23,9 @@ const Header = () => {
   };
   const { user } = useSelector((state) => state.auth);
   const data = getUserDetails();
+  // document.body.addEventListener("click", (e) => {
+  //   setIsActive(!isActive);
+  // });
   const handleClick = (e) => {
     setIsActive(!isActive);
     if (isActive) {
@@ -126,9 +129,9 @@ const Header = () => {
                     ? `p-2 bg-gradient-to-r from-indigo-500`
                     : `p-2`
                 }
-                to="/processing-task"
+                to="/progress-task"
               >
-                Processing Tasks
+                Progress Tasks
               </NavLink>
             </li>
             <li>

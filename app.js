@@ -14,9 +14,11 @@ const mongoSanitize = require("express-mongo-sanitize")
 
 
 const app = new  express()
-
+const corsOptions = {
+    origin: "http://127.0.0.1:5173",
+  };
 app.use(bodyParser.json())
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(hpp())
 app.use(xss())
 app.use(helmet({

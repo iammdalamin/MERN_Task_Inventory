@@ -4,7 +4,6 @@ const TaskModel = require("../models/TaskModel");
 exports.TaskCreate = (req, res) => {
     const reqBody = req.body;
     reqBody.email = req.headers["email"]
-    console.log(reqBody);
     TaskModel.create(reqBody, (err, data) => {
         !err ? (
             res.json({
@@ -64,7 +63,6 @@ exports.TaskUpdate = (req, res) => {
 exports.TaskStatusUpdate = (req, res) => {
     const id = req.params.id
     const { status } = req.body;
-
     TaskModel.updateOne({_id:id}, { status },(err, data) => {
         !err ? (
             res.json({

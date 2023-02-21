@@ -3,23 +3,17 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./componentss/Header";
 import TaskCreate from "./componentss/TaskCreate";
 import { TaskListByStatus } from "./Helpers/TaskService";
+import CompleteTaskPage from "./pages/CompleteTaskPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import NewTaskPage from "./pages/NewTaskPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import ProgressTaskPage from "./pages/ProgressTaskPage";
 import SignupPage from "./pages/SignupPage";
-import { setProgress } from "./redux/state-slice/taskSlice";
 
 function App() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-
-  const getList = async () => {
-    const res = await TaskListByStatus("New");
-    const { data } = res;
-
-    console.log("res", data);
-  };
-  getList();
 
   return (
     <BrowserRouter>
@@ -30,6 +24,18 @@ function App() {
         <Route
           path="/task-create"
           element={user ? <TaskCreate /> : <LoginPage />}
+        />
+        <Route
+          path="/new-task"
+          element={user ? <NewTaskPage /> : <LoginPage />}
+        />
+        <Route
+          path="/progress-task"
+          element={user ? <ProgressTaskPage /> : <LoginPage />}
+        />
+        <Route
+          path="/complete-task"
+          element={user ? <CompleteTaskPage /> : <LoginPage />}
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<NotFoundPage />} />

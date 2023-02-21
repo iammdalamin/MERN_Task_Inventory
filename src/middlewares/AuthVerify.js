@@ -6,7 +6,7 @@ exports.requireSignIn = (req, res, next) => {
     
     try {
         let token = req.headers["token"]
-        console.log(token);
+        // console.log(token);
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
                 console.log("err", err);
@@ -15,7 +15,7 @@ exports.requireSignIn = (req, res, next) => {
                     err:"Unauthorized Token"
                 })
             } else {
-                console.log("Decoded==>",decoded);
+                // console.log("Decoded==>",decoded);
                 let email = decoded
                 ["data"]
             

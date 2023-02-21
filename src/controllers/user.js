@@ -15,7 +15,6 @@ cloudinary.config({
 exports.registration = async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        console.log( req.body);
         if (!name.trim()) {
             return res.json({status:400,
                 error:"Name is required"})
@@ -51,7 +50,6 @@ exports.registration = async (req, res) => {
 
         let Payload = { exp: Math.floor(Date.now() / 1000) * (24 * 60 * 60), data: user["email"] }
         let token =  jwt.sign(Payload, process.env.JWT_SECRET)
-        console.log("user", user);
         
       return res.status(200).json({
             user: {

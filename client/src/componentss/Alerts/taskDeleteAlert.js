@@ -13,7 +13,7 @@ export const taskDeleteAlert = (id) => {
   }).then(async (result) => {
     if (result.isConfirmed) {
       await TaskDelete(id);
-      Swal.fire("Deleted!", "Your file has been deleted.", "success");
+     
       window.location.reload(false);
 
     }

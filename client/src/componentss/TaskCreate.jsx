@@ -8,7 +8,6 @@ const TaskCreate = () => {
   const [desc, setDesc] = useState("");
   const navigate = useNavigate();
   const tasks = useSelector((state) => state.tasks);
-  console.log(tasks);
   const { isLoading } = tasks;
   const handleSubmit = async (e) => {
     e.preventDefault();
