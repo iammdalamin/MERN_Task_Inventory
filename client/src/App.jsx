@@ -4,11 +4,13 @@ import Header from "./componentss/Header";
 import TaskCreate from "./componentss/TaskCreate";
 import { TaskListByStatus } from "./Helpers/TaskService";
 import CompleteTaskPage from "./pages/CompleteTaskPage";
+import ForgetPassPage from "./pages/ForgetPassPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import NewTaskPage from "./pages/NewTaskPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProgressTaskPage from "./pages/ProgressTaskPage";
+import ResetPassPage from "./pages/ResetPassPage";
 import SignupPage from "./pages/SignupPage";
 
 function App() {
@@ -38,6 +40,8 @@ function App() {
           element={user ? <CompleteTaskPage /> : <LoginPage />}
         />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/forget-password" element={<ForgetPassPage />} />
+        <Route path="/reset-password" element={<ResetPassPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

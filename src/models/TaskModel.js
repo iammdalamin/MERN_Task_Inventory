@@ -14,7 +14,9 @@ const TaskSchema = new mongoose.Schema({
         default:"New"
     },
     
-    email:{type:String},
+    email: { type: String },
+    
+    
 
    
 }, {timestamps: true, versionKey: false })

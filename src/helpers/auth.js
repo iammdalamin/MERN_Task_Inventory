@@ -16,9 +16,9 @@ exports.hashPassword = (password) => {
     })
 }
 
-exports.comparePassword = (password, hashed) => {
+exports.comparePassword =  (password, hashed) => {
     try {
-        return bcrypt.compare(password, hashed)
+        return  bcrypt.compare(password, hashed)
 
     } catch {
         return false

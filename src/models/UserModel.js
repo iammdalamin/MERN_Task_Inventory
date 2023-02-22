@@ -17,7 +17,8 @@ const UserSchema = new mongoose.Schema({
     },
     profile_img: {type:String},
     cloudinary_id: {type:String},
-
+    passwordResetToken: { type: String, default: undefined },
+    passwordResetExpires: { type: String, default: undefined },
    
 }, {timestamps: true, versionKey: false })
 

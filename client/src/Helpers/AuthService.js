@@ -8,8 +8,8 @@ const AxiosHeader = {
         'Content-Type': 'application/json',
         'token':token,}}
 
-// const BaseURL = "https://task-inventory-server.onrender.com/api/v1";
-const BaseURL = "http://localhost:5000/api/v1";
+const BaseURL = "https://task-inventory-server.onrender.com/api/v1";
+// const BaseURL = "http://localhost:5000/api/v1";
 
 
 export const Register = async (userdata) => {
@@ -32,7 +32,7 @@ export const Login = async (userdata) => {
     const res = await axios.post(URL, userdata)
     if (res.data) {
         if(res.data.status===400){
-            cogoToast.success(`${res.data.error}`)
+            cogoToast.error(`${res.data.error}`)
             return 
 
         }
@@ -47,5 +47,26 @@ export const Login = async (userdata) => {
 
 export const Logout = async () => {
     localStorage.clear()
+  
+}
+
+
+
+export const ForgetPass = async (email) => {
+console.log(email);
+    const URL = `${BaseURL}/forget-password`
+    const res = await axios.post(URL, {email})
+    console.log(res);
+    if (res.data) {
+        if(res.status===400){
+            cogoToast.error(`${res.data}`)
+            return 
+
+        }
+
+        cogoToast.success(`${res.data}`)
+    }
+
+   return res.data
   
 }
