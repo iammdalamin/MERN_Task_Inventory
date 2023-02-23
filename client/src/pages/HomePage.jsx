@@ -2,19 +2,18 @@ import React, { useEffect } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Spinner from "../componentss/Spinner";
-import Task from "../componentss/Task";
+import Spinner from "../components/Spinner";
+import Task from "../components/Task";
 import { getAllTask } from "../redux/state-slice/taskSlice";
 const HomePage = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getAllTask());
-  }, []);
   const { tasks, isLoading, isError, isSuccess, message } = useSelector(
     (state) => state.tasks
   );
-
+  useEffect(() => {
+    dispatch(getAllTask());
+  }, []);
   if (isLoading) {
     return <Spinner />;
   }

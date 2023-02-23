@@ -1,16 +1,18 @@
 import React, { useRef } from "react";
 import { useNavigate } from "react-router";
-import { ForgetPass } from "../Helpers/AuthService";
+import { RecoveryVerifyOTP } from "../../Helpers/AuthService";
+import { getEmail } from "../../Helpers/SessionHelper";
 
-const ForgetPassPage = () => {
+const VerifyOTP = () => {
   let navigate = useNavigate();
-  let emailRef = useRef();
+  let email = getEmail();
+  let otpRef = useRef();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let email = emailRef.value;
+    let otp = otpRef.value;
 
-    ForgetPass(email).then((res) => {
+    await RecoveryVerifyOTP(email, otp).then((res) => {
       if (res) {
         navigate("/reset-password");
       }
@@ -21,22 +23,22 @@ const ForgetPassPage = () => {
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-1/3 h-auto flex flex-col gap-4 justify-center items-center px-8 py-12 rounded-xl bg-slate-800">
         <h1 className="text-slate-50 font-extrabold text-4xl">
-          Forget Password
+          Verify Your OTP
         </h1>
         <div className="flex flex-col gap-4 w-2/3">
           <input
             className="p-2 outline-none rounded-md"
-            type="email"
-            ref={(input) => (emailRef = input)}
+            type="text"
+            ref={(input) => (otpRef = input)}
             required
-            placeholder="Email"
+            placeholder="OTP"
           />
 
           <button
             className="px-2 py-2 bg-gray-200"
             onClick={(e) => handleSubmit(e)}
           >
-            Send Email
+            Verify OTP
           </button>
         </div>
       </div>
@@ -44,4 +46,4 @@ const ForgetPassPage = () => {
   );
 };
 
-export default ForgetPassPage;
+export default VerifyOTP;

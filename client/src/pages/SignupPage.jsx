@@ -2,7 +2,7 @@ import cogoToast from "cogo-toast";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import Spinner from "../componentss/Spinner";
+import Spinner from "../components/Spinner";
 import { register, reset } from "../redux/state-slice/authSlice";
 
 const SignupPage = () => {

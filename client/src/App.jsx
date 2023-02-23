@@ -1,22 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "./componentss/Header";
-import TaskCreate from "./componentss/TaskCreate";
-import { TaskListByStatus } from "./Helpers/TaskService";
+import ForgetPassPage from "./components/Account Recover/ForgetPassPage";
+import ResetPassPage from "./components/Account Recover/ResetPassPage";
+import VerifyOTP from "./components/Account Recover/VerifyOTP";
+import Header from "./components/Header";
+import TaskCreate from "./components/TaskCreate";
+import { getOTP } from "./Helpers/SessionHelper";
 import CompleteTaskPage from "./pages/CompleteTaskPage";
-import ForgetPassPage from "./pages/ForgetPassPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import NewTaskPage from "./pages/NewTaskPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ProgressTaskPage from "./pages/ProgressTaskPage";
-import ResetPassPage from "./pages/ResetPassPage";
 import SignupPage from "./pages/SignupPage";
 
 function App() {
-  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-
+  const otp = getOTP();
   return (
     <BrowserRouter>
       <Header />
@@ -41,6 +41,7 @@ function App() {
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/forget-password" element={<ForgetPassPage />} />
+        <Route path="/verify-otp" element={<VerifyOTP />} />
         <Route path="/reset-password" element={<ResetPassPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

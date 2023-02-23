@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AiOutlineDoubleLeft, AiOutlineDoubleRight } from "react-icons/ai";
-import { BiLogOut } from "react-icons/bi";
+import { BiLogIn, BiLogOut } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { Link, NavLink } from "react-router-dom";
@@ -55,27 +55,6 @@ const Header = () => {
           >
             TaskInventory
           </Link>
-
-          {user ? (
-            <div
-              className={
-                isActive
-                  ? `cursor-pointer right-[-5rem] absolute p-2 bg-indigo-700 text-slate-50 `
-                  : `cursor-pointer   p-2 bg-indigo-700 text-slate-50 `
-              }
-              onClick={() => handleClick()}
-            >
-              {isActive ? (
-                <AiOutlineDoubleRight size={23} />
-              ) : (
-                <AiOutlineDoubleLeft size="23" />
-              )}
-            </div>
-          ) : (
-            <Link className="bg-gray-50 text-slate-700" to="/login">
-              LogIn
-            </Link>
-          )}
         </div>
         <div className="pt-8 pb-12 text-sm leading-6 ">
           <p>
@@ -86,73 +65,98 @@ const Header = () => {
 
         <div className=" pb-5  h-screen w-full flex flex-col justify-between">
           <ul className="flex flex-col items-start justify-start gap-4">
-            <li>
-              <NavLink
-                className={(navData) =>
-                  navData.isActive
-                    ? `p-2 bg-gradient-to-r from-indigo-500`
-                    : `p-2`
-                }
-                to="/"
-              >
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                className={(navData) =>
-                  navData.isActive
-                    ? `p-2 bg-gradient-to-r from-indigo-500`
-                    : `p-2`
-                }
-                to="/task-create"
-              >
-                Create Task
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                className={(navData) =>
-                  navData.isActive
-                    ? `p-2 bg-gradient-to-r from-indigo-500`
-                    : `p-2`
-                }
-                to="/new-task"
-              >
-                New Tasks
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                className={(navData) =>
-                  navData.isActive
-                    ? `p-2 bg-gradient-to-r from-indigo-500`
-                    : `p-2`
-                }
-                to="/progress-task"
-              >
-                Progress Tasks
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                className={(navData) =>
-                  navData.isActive
-                    ? `p-2 bg-gradient-to-r from-indigo-500`
-                    : `p-2`
-                }
-                to="/complete-task"
-              >
-                Complete Tasks
-              </NavLink>
-            </li>
-            <li>
-              <NavLink className="p-2" to="/" onClick={(e) => handleLogout(e)}>
-                <span>
-                  Logout <BiLogOut className="inline-block" size={25} />
-                </span>
-              </NavLink>
-            </li>
+            {!user ? (
+              <li>
+                <NavLink
+                  className={(navData) =>
+                    navData.isActive
+                      ? `p-2 bg-gradient-to-r from-indigo-500`
+                      : `p-2`
+                  }
+                  to="/"
+                  onClick={(e) => handleLogout(e)}
+                >
+                  <span>
+                    Login <BiLogIn className="inline-block" size={25} />
+                  </span>
+                </NavLink>
+              </li>
+            ) : (
+              <>
+                {" "}
+                <li>
+                  <NavLink
+                    className={(navData) =>
+                      navData.isActive
+                        ? `p-2 bg-gradient-to-r from-indigo-500`
+                        : `p-2`
+                    }
+                    to="/"
+                  >
+                    Home
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className={(navData) =>
+                      navData.isActive
+                        ? `p-2 bg-gradient-to-r from-indigo-500`
+                        : `p-2`
+                    }
+                    to="/task-create"
+                  >
+                    Create Task
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className={(navData) =>
+                      navData.isActive
+                        ? `p-2 bg-gradient-to-r from-indigo-500`
+                        : `p-2`
+                    }
+                    to="/new-task"
+                  >
+                    New Tasks
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className={(navData) =>
+                      navData.isActive
+                        ? `p-2 bg-gradient-to-r from-indigo-500`
+                        : `p-2`
+                    }
+                    to="/progress-task"
+                  >
+                    Progress Tasks
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className={(navData) =>
+                      navData.isActive
+                        ? `p-2 bg-gradient-to-r from-indigo-500`
+                        : `p-2`
+                    }
+                    to="/complete-task"
+                  >
+                    Complete Tasks
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className="p-2"
+                    to="/"
+                    onClick={(e) => handleLogout(e)}
+                  >
+                    <span>
+                      Logout <BiLogOut className="inline-block" size={25} />
+                    </span>
+                  </NavLink>
+                </li>
+              </>
+            )}
           </ul>
           {!user ? (
             <p className="text-md text-slate-100 pt-5">

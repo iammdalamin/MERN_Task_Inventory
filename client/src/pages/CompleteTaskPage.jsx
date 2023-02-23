@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Task from "../componentss/Task";
+import Task from "../components/Task";
 import { TaskListByStatus } from "../Helpers/TaskService";
 
 const CompleteTaskPage = () => {

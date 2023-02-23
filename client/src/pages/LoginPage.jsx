@@ -2,7 +2,7 @@ import cogoToast from "cogo-toast";
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import Spinner from "../componentss/Spinner";
+import Spinner from "../components/Spinner";
 import { login, reset } from "../redux/state-slice/authSlice";
 const LoginPage = () => {
   let emailRef,
@@ -67,6 +67,10 @@ const LoginPage = () => {
           If you have no account.
           <Link className="text-red-400" to="/signup">
             Create Account
+          </Link>
+          . If you forget your password then{" "}
+          <Link className="text-white" to="/forget-password">
+            click here
           </Link>
         </p>
       </div>

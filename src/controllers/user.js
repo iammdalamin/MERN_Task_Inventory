@@ -6,6 +6,8 @@ const nodemailer = require("nodemailer");
 const { hashPassword, comparePassword } = require("../helpers/auth");
 const UserModel = require("../models/UserModel");
 const cloudinary = require("cloudinary").v2;
+const OTPModel = require("../models/OTPModel");
+const { SendEmailUtility } = require("../utility/SendEmailUtility");
 cloudinary.config({
   cloud_name: "dzmhzssov",
   api_key: "793214593646265",
@@ -70,7 +72,6 @@ exports.registration = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
   if (!email) {
     return res.json({
       status: 400,
@@ -87,10 +88,8 @@ exports.login = async (req, res) => {
 
   try {
     const user = await UserModel.aggregate([{ $match: { email } }]);
-    console.log(user[0].password);
 
     const passwordMatch = await comparePassword(password, user[0].password);
-    console.log("match", passwordMatch);
     if (!passwordMatch) {
       return res.json({
         status: 400,
@@ -177,7 +176,6 @@ exports.upload = async (req, res, next) => {
         `${files.img.filepath}`,
         options
       );
-      console.log(result.public_id);
       return result.public_id;
     } catch (error) {
       console.error("error", error);
@@ -187,88 +185,97 @@ exports.upload = async (req, res, next) => {
 };
 
 exports.forgetPass = async (req, res) => {
-  const { email } = req.body;
-  console.log(req.body);
-  console.log(req.headers.host);
+  const { email } = req.params;
   // Generate a unique token
-  const token = Math.floor(100000 + Math.random() * 900000)
+  const OTPcode = Math.floor(100000 + Math.random() * 900000)
     ;
-  const user = await UserModel.find({ email });
-  if (user) {
-    try {
-      await UserModel.updateOne(
-        { email },
-        {
-          passwordResetToken: token,
-          passwordResetExpires: Date.now() + 3600000,
-        }
-      );
-      const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: `${process.env.EMAIL}`,
-          pass: `${process.env.EMAIL_PASS}`,
-        },
-      });
-
-      const mailOptions = {
-        from: `${process.env.EMAIL}`,
-        to: email,
-        subject: "Password Reset",
-        text: `You are receiving this email because you (or someone else) has requested a password reset for your account.\n\n`,
-        html: `<h1 style={{fontSize:"50px"}}>${ token}</h1>`, // html body
-
-      };
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.log("error==========>", error);
-        } else {
-          console.log(`Email sent: ${info.response}`);
-        }
-      });
-
-      res.send(
-        "An email has been sent to your account with further instructions."
-      );
-    } catch (err) {
-      console.log("err=======", err);
-      return res.json({
-        status: 400,
-        message: "Email sending failed!",
-      });
-    }
+  try {
+    const UserCount = (await UserModel.aggregate([{ $match: { email: email } }, { $count: "total" }]))
+  if (UserCount.length > 0) {
+    let createOTP = await OTPModel.create({ email: email, otp: OTPcode })
+    let SendEmail = await SendEmailUtility(email, "Your OTP is " + OTPcode, "Task Inventory OTP Verification").then((result) => {
+      res.status(200).json({
+        message: "Email Sent!",
+        data:result
+      })    })
+   
+ 
   } else {
-    return res.json({
-      status: 400,
-      message: "User not found!",
-    });
+    res.status(400).json({
+      message:"Email sending failed!"
+    })
+  }} catch (err) {
+    res.status(400).json({
+      message: "Failed to processing",
+      data:err
+    })
   }
+ 
 };
 
+exports.otpVerify = async (req, res) => {
+  const {email,otp} = req.params;
+  try {
+    const user = await OTPModel.aggregate([{ $match: { email: email, otp: otp } }])
+  if (user.length > 0) {
+      await OTPModel.updateOne({ email: email, otp: otp }).then((data) => {
+      res.status(200).json({
+        message: "Success",
+        email: email,
+        otp: otp,
+        data: data
+      })
+    })
+  } else {
+    res.status(400).json({
+      message: "Invalid OTP",
+      data: err
+    })
+  }
+  } catch (err) {
+    res.status(400).json({
+      message: "Fail to verify",
+      data: err
+    })
+  }
+  
+}
+
+
+
 exports.resetPass = async (req, res) => {
-  const { token } = req.params;
-  const { password } = req.body;
+  const { otp, email, password } = req.body;
   if (!password || password.length < 6) {
     return res.json({
       status: 400,
       error: "Password must be at least 6 characters long",
     });
   }
-  const hashedPassword = await hashPassword(password);
+  try {
+    let user = await OTPModel.findOne({ email: email, otp: otp, })
+  if (user) {
+    const hashedPassword = await hashPassword(password);
 
-    let value = undefined;
-      await UserModel.findOneAndUpdate(
-        { passwordResetToken:token },
-        {
-          password: hashedPassword,
-          passwordResetExpires: "",
-          passwordResetToken: "",
-        }
-      ).then((data) => {
-        res.json({
-          data: data,
-        });
-      });
+    let passwordUpdate = await UserModel.updateOne({ email: email }, { password: hashedPassword })
+    if (passwordUpdate) {
+       await OTPModel.deleteOne({ email: email })
     }
-  
+    res.status(200).json({
+      message: "Password Updated",
+      data:passwordUpdate
+    })
+  } else {
+    res.status(400).json({
+      message: "Failed",
+      data:user
+    })
+  }
+}catch (err) {
+  res.status(400).json({
+    message: "Fail to reset",
+    data: err
+  })
+}
 
+}
+  
