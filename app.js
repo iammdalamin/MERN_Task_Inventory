@@ -15,7 +15,7 @@ const mongoSanitize = require("express-mongo-sanitize")
 
 const app = new  express()
 const corsOptions = {
-    origin: "http://127.0.0.1:5173",
+    origin: "https://task-inventory-server.onrender.com",
   };
 app.use(bodyParser.json())
 app.use(cors(corsOptions))
